@@ -38,9 +38,11 @@ def submit():
     # For form vailidation
     body_error =""
     title_error =""
-
+    newtitle =""
+    newbody =""
     newtitle = request.form['title']
     newbody = request.form['body']
+    
 
     if newtitle == "":
         title_error = "Please fill in the title"
@@ -48,7 +50,8 @@ def submit():
         body_error = "Please fill in the body"
 
     if title_error or body_error:
-        return render_template('newpost.html', title = "Add a blog post", body_error= body_error, title_error=title_error)
+        return render_template('newpost.html', title = "Add a blog post", 
+                newtitle = newtitle, newbody= newbody, body_error= body_error, title_error=title_error)
     
     # Post the blog entry to the database and redirect the confirmation to the single blog that was created
     elif request.method == 'POST':

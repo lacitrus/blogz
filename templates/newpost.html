@@ -8,7 +8,7 @@
 
     <label>Title for your new blog
     <br>
-    <input type= "text" name = "title" />
+    <input type= "text" name = "title" value={{newtitle}}>
     <br>
     </label>
     <p class="error">{{title_error}}</p>
@@ -16,7 +16,7 @@
     <br>
     <label>Your new blog
     <br>
-    <textarea rows="5" cols="50" name = "body"></textarea>
+    <textarea rows="5" cols="50" name = "body" >{{newbody}}</textarea>
     </label>
     <p class="error">{{body_error}}</p>
     <br>
