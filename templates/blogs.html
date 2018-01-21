@@ -10,7 +10,7 @@
 <a href="/blog?id={{blog.id}}"><h2>{{blog.title}}</h2></a>
 {{blog.body}}
 <br>
-written by <a href="/blog?user={{username}}">{{username}}</a>
+written by <a href="/blog?user={{users[blog.owner_id-1].username}}">{{users[blog.owner_id-1].username}}</a>
 <hr>
 </li>
 
