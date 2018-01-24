@@ -6,20 +6,27 @@
             .error { color: red; }
         </style>
     </head>
-<body>
+<body style= "font-family: sans-serif; margin-left:5em; margin-top: 2em;" >
 <p>
-   <h5>
-    <a href="/">Home</a>
-    <a href="/blog">All Blogs</a>  
-    <a href="/newpost">Add a Blog Entry</a>
-    <a href="/login">Log in</a>
-    <a href="/logout">Log out</a>
-    </h5>
+<div >
+    <span >
+    <a href="/">Home</a>&nbsp&nbsp
+    <a href="/blog">All blogs</a>  &nbsp&nbsp
+    <a href="/newpost">Add a blog entry</a>
+    </span>
+    
+<span style="padding-left: 20em;">       
+    <a href="/login" >Log in</a>&nbsp&nbsp
+    <a href="/logout" >Log out</a>
+</span>    
+</div>
+ 
+
 </p>
     <p>
         {% with messages = get_flashed_messages(with_categories = True) %}
             {% for category,message in messages %}
-                {{message|safe}}
+               <p class="{{category}}"> {{message}} </p>
             {% endfor %}
         {% endwith %}
     </p>

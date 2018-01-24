@@ -52,30 +52,65 @@ def login():
 
         if user and password == user.password:
             session['username'] = username
-            return redirect('/blog')
+            return redirect('/newpost')
         else:
-            flash("User does not exist", 'danger')
+            if user:
+                flash("Password is incorrect", 'error')
+            else: 
+                flash("User does not exist", 'error')
 
     return render_template('login.html')  
 
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
-    if  request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        verify = request.form['verify']
+    if request.method == 'GET':
+        return render_template('signup.html')    
+    
+    # Use tempalte for error messages
+    username = request.form['username']
+    password = request.form['password']
+    verify = request.form['verify'] 
 
-        existing_user = User.query.filter_by(username=username).first()
-        if not existing_user:
-            new_user = User(username, password)
-            db.session.add(new_user)
-            db.session.commit()
-            session['username'] = username
-            return redirect('/newpost')
-        else:
-            flash("Username already exists!")
+    field_error = ''
+    verify_error = ''
+    name_error = ''
+    password_error = ''
 
-    return render_template('signup.html')            
+
+    if username == '' or password == '' or verify == '':
+        field_error = "One or more fields are invalid"
+    if verify != password:
+        verify_error = "Passwords do not match"
+    if len(username) < 3:
+        name_error = "Invalid username"
+    if len(password) < 3:
+        password_error = "Invalid password"
+    if field_error or verify_error or name_error or password_error:
+        return render_template('signup.html', field_error = field_error,
+                verify_error = verify_error, name_error = name_error,
+                password_error = password_error)
+    
+    else:
+        if request.method == 'POST': 
+                
+            existing_user = User.query.filter_by(username=username).first()
+        
+            if existing_user:
+                flash("Username already exists!", 'error')
+                return redirect('/signup')  
+            elif not existing_user:
+        
+                new_user = User(username, password)
+                db.session.add(new_user)
+                db.session.commit()
+                session['username'] = username
+                return redirect('/newpost')
+
+
+
+
+
+ 
     
 
 @app.route('/logout', methods=['POST', 'GET'])
